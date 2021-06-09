@@ -71,4 +71,11 @@ RSpec.describe CustomerRepository do
       expect(@customer_repo.all[9].updated_at).to be_a(Time)
     end
   end
+
+  it 'deletes customers' do
+    expect(@customer_repo.all.length).to eq(10)
+    id = 1
+    @customer_repo.delete(id)
+    expect(@customer_repo.all.length).to eq(9)
+  end
 end

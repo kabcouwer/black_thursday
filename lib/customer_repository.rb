@@ -64,4 +64,8 @@ class CustomerRepository
       found_customer.update_time
     end
   end
+
+  def delete(id)
+    remove(id, @all)
+  end
 end
