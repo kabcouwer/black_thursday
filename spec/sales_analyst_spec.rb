@@ -65,7 +65,7 @@ RSpec.describe 'SalesAnalyst' do
 
     it 'can find the average price of a merchants items' do
       merchant_id = 12334159
-      
+
       expect(@sales_analyst.average_item_price_for_merchant(merchant_id)).to be_a(BigDecimal)
     end
 
@@ -123,5 +123,11 @@ RSpec.describe 'SalesAnalyst' do
       expect(@sales_analyst.invoice_status(:shipped)).to eq(56.95)
       expect(@sales_analyst.invoice_status(:returned)).to eq(13.5)
     end
+
+    it 'can return true if the invoice with the corresponding id is paid in full' do
+      expect(@sales_analyst.invoice_paid_in_full?(2179)).to eq(true)
+      expect(@sales_analyst.invoice_paid_in_full?(17522)).to eq(false)
+    end
+
   end
 end

@@ -37,7 +37,7 @@ class ItemRepository
   end
 
   def find_by_name(name)
-    find_with_name(name, all)
+    find_with_name(name, @all)
   end
 
   def find_all_with_description(description)

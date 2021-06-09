@@ -160,4 +160,12 @@ class SalesAnalyst
     percentage.round(2)
   end
 
+  def invoice_paid_in_full?(invoice_id)
+    @sales_engine.transactions.find_all_by_invoice_id(invoice_id).any? do |transaction|
+      transaction.result == 'success'
+    end
+  end
+
+
+
 end
