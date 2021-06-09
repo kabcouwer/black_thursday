@@ -155,7 +155,6 @@ class SalesAnalyst
         invoices_with_status << invoice
       end
     end
-    # require "pry"; binding.pry
     percentage = (invoices_with_status.length.to_f / sales_engine.all_invoices.length) * 100
     percentage.round(2)
   end
@@ -166,6 +165,13 @@ class SalesAnalyst
     end
   end
 
-
-
+  def invoice_total(invoice_id)
+    array = []
+    @sales_engine.all_invoice_items.each do |invoice_item|
+     if invoice_item.invoice_id == invoice_id
+       array << invoice_item.quantity * invoice_item.unit_price
+     end
+   end
+   array.sum
+  end
 end

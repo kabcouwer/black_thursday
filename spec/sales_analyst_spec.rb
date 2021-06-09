@@ -125,9 +125,15 @@ RSpec.describe 'SalesAnalyst' do
     end
 
     it 'can return true if the invoice with the corresponding id is paid in full' do
-      expect(@sales_analyst.invoice_paid_in_full?(2179)).to eq(true)
-      expect(@sales_analyst.invoice_paid_in_full?(17522)).to eq(false)
+      invoice_id = 2179
+      expect(@sales_analyst.invoice_paid_in_full?(invoice_id)).to eq(true)
+      invoice_id = 17522
+      expect(@sales_analyst.invoice_paid_in_full?(invoice_id)).to eq(false)
     end
 
+    it 'can return the total $ amount of the invoice with corresponding id' do
+      invoice_id = 3560
+      expect(@sales_analyst.invoice_total(invoice_id)).to eq(0)
+    end
   end
 end
