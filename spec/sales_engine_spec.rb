@@ -30,5 +30,21 @@ RSpec.describe SalesEngine do
       expect(@engine.items).to be_a(ItemRepository)
       expect(@engine.all_items).to be_an(Array)
     end
+    it 'has access to InvoiceRepository' do
+      expect(@engine.invoices).to be_a(InvoiceRepository)
+      expect(@engine.all_invoices).to be_an(Array)
+    end
+    it 'has access to InvoiceItemRepository' do
+      expect(@engine.invoice_items).to be_a(InvoiceItemRepository)
+      expect(@engine.all_invoice_items).to be_an(Array)
+    end
+    it 'has access to TransactionRepository' do
+      expect(@engine.transactions).to be_a(TransactionRepository)
+      expect(@engine.all_transactions).to be_an(Array)
+    end
+    it 'has access to CustomerRepository' do
+      expect(@engine.customers).to be_a(CustomerRepository)
+      expect(@engine.all_customers).to be_an(Array)
+    end
   end
 end
