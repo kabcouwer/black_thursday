@@ -46,4 +46,13 @@ class CustomerRepository
       customer.last_name == last_name
     end
   end
+
+  def create(attributes)
+    highest_id = @all.max_by do |customer|
+      customer.id
+    end
+    new_customer = Customer.new(attributes, self)
+    new_customer.new_id(highest_id.id + 1)
+    @all << new_customer
+  end
 end

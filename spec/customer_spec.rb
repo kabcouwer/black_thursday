@@ -25,5 +25,10 @@ RSpec.describe Customer do
       expect(@customer.created_at).to be_a(Time)
       expect(@customer.updated_at).to be_a(Time)
     end
+
+    it 'can create a new id' do
+      @customer.new_id(11)
+      expect(@customer.id).to eq(11)
+    end
   end
 end

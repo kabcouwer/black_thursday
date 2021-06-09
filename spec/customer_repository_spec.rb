@@ -43,5 +43,19 @@ RSpec.describe CustomerRepository do
       last_name = "Incravina"
       expect(@customer_repo.find_all_by_last_name(last_name)).to eq([])
     end
+
+    it 'can create a new customer' do
+      attributes = @customer_data = {
+                                      :id => 13,
+                                      :first_name => "Natalie",
+                                      :last_name => "Imbruglia",
+                                      :created_at => Time.now,
+                                      :updated_at => Time.now
+                                    }
+      @customer_repo.create(attributes)
+      expect(@customer_repo.all.length).to eq(11)
+      expect(@customer_repo.all.last.id).to eq(13)
+      expect(@customer_repo.all.last.first_name).to eq("Natalie")
+    end
   end
 end
