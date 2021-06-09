@@ -23,10 +23,27 @@ class CustomerRepository
                         id: customer_data[:id],
                         first_name: customer_data[:first_name],
                         last_name: customer_data[:last_name],
-                        created_at: customer_data[:created_at],
-                        updated_at: customer_data[:updated_at]
+                        created_at: Time.parse(customer_data[:created_at]),
+                        updated_at: Time.parse(customer_data[:updated_at])
                       }
+
       @all << Customer.new(customer_hash, self)
+    end
+  end
+
+  def find_by_id(id)
+    find_with_id(id, @all)
+  end
+
+  def find_all_by_first_name(first_name)
+    @all.find_all do |customer|
+      customer.first_name == first_name
+    end
+  end
+
+  def find_all_by_last_name(last_name)
+    @all.find_all do |customer|
+      customer.last_name == last_name
     end
   end
 end
