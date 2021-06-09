@@ -27,12 +27,10 @@ RSpec.describe TransactionRepository do
 
   describe 'methods' do
     it 'can find transactions given a unique id' do
-
       expect(@transaction_repo.find_by_id(9)).to eq(@transaction_repo.all[8])
     end
 
     it 'can find transactions given a unique invoice id' do
-
       id = 290
       expect(@transaction_repo.find_all_by_invoice_id(id)).to be_an(Array)
       expect(@transaction_repo.find_all_by_invoice_id(id).length).to eq(1)
@@ -41,7 +39,6 @@ RSpec.describe TransactionRepository do
     end
 
     it 'can find transactions given a credit card number' do
-
       number = "4068631943231473"
       expect(@transaction_repo.find_all_by_credit_card_number(number)).to be_an(Array)
       expect(@transaction_repo.find_all_by_credit_card_number(number).length).to eq(1)
@@ -50,7 +47,6 @@ RSpec.describe TransactionRepository do
     end
 
     it 'can find transactions given a result' do
-
       result = :success
       expect(@transaction_repo.find_all_by_result(result)).to be_an(Array)
       expect(@transaction_repo.find_all_by_result(result).length).to eq(9)
@@ -61,14 +57,14 @@ RSpec.describe TransactionRepository do
 
     it 'can create a new transaction' do
       attributes = {
-        id: 11,
-        invoice_id: 71,
-        credit_card_number: "1111222233334444",
-        credit_card_expiration_date: "6969",
-        result: :success,
-        created_at: Time.now,
-        updated_at: Time.now
-      }
+                      id: 11,
+                      invoice_id: 71,
+                      credit_card_number: "1111222233334444",
+                      credit_card_expiration_date: "6969",
+                      result: :success,
+                      created_at: Time.now,
+                      updated_at: Time.now
+                    }
 
       @transaction_repo.create(attributes)
       expect(@transaction_repo.all.length).to eq(11)
