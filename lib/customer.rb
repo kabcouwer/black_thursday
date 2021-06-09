@@ -18,4 +18,8 @@ class Customer
   def new_id(id_number)
     @id = id_number
   end
+
+  def update_first_name(first_name)
+    @first_name = first_name
+  end
 end

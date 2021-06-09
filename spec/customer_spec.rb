@@ -30,5 +30,15 @@ RSpec.describe Customer do
       @customer.new_id(11)
       expect(@customer.id).to eq(11)
     end
+
+    it 'can update a first name' do
+      @customer.update_first_name("Victoria")
+      expect(@customer.first_name).to eq("Victoria")
+    end
+
+    it 'can update a last name' do
+      @customer.update_last_name("Jenkins")
+      expect(@customer.last_name).to eq("Jenkins")
+    end
   end
 end

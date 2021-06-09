@@ -57,5 +57,18 @@ RSpec.describe CustomerRepository do
       expect(@customer_repo.all.last.id).to eq(11)
       expect(@customer_repo.all.last.first_name).to eq("Natalie")
     end
+
+    it 'can update id and attributes' do
+      id = 10
+      attributes = {
+                    first_name: "Tank",
+                    last_name: "Ball",
+                    }
+
+      @customer_repo.update(10, attributes)
+      expect(@customer_repo.all[9].first_name).to eq("Tank")
+      expect(@customer_repo.all[9].last_name).to eq("Ball")
+      expect(@customer_repo.all[9].updated_at).to be_a(Time)
+    end
   end
 end
