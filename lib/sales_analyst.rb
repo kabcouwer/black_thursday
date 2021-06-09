@@ -174,4 +174,16 @@ class SalesAnalyst
    end
    array.sum
   end
+
+  def total_revenue_by_date(date)
+    invoices = @sales_engine.all_invoices.find_all do |invoice|
+      invoice.created_at.strftime('%Y-%m-%d') == date.strftime('%Y-%m-%d')
+    end
+    invoice_ids = invoices.map do |invoice|
+      invoice.id
+    end
+    invoice_ids.sum do |id|
+      invoice_total(id)
+    end
+  end
 end

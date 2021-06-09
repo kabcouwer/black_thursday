@@ -14,11 +14,11 @@ RSpec.describe 'SalesAnalyst' do
     @sales_analyst = @sales_engine.analyst
   end
   describe 'instantiation' do
-    it 'exists' do
+    xit 'exists' do
       expect(@sales_analyst).to be_a(SalesAnalyst)
     end
 
-    it 'has access to Sales Engine' do
+    xit 'has access to Sales Engine' do
       expect(@sales_engine.items).to be_a(ItemRepository)
       expect(@sales_engine.all_items).to be_an(Array)
       expect(@sales_engine.merchants).to be_a(MerchantRepository)
@@ -137,6 +137,11 @@ RSpec.describe 'SalesAnalyst' do
     xit 'can return the total $ amount of the invoice with corresponding id' do
       invoice_id = 3560
       expect(@sales_analyst.invoice_total(invoice_id)).to eq(0.3116147e5)
+    end
+
+    it 'can find the total revenue for a given date' do
+      date = Time.parse('2001-11-24')
+      expect(@sales_analyst.total_revenue_by_date(date)).to eq(0.256022e4)
     end
   end
 end
