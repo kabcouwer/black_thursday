@@ -4,7 +4,11 @@ RSpec.describe SalesEngine do
   before :each do
     @paths = {
       :items     => 'fixture/item_fixture.csv',
-      :merchants => 'fixture/merchant_fixture.csv'
+      :merchants => 'fixture/merchant_fixture.csv',
+      :invoices  => 'fixture/invoice_fixture.csv',
+      :invoice_items => 'fixture/invoice_item_fixture.csv',
+      :transactions => 'fixture/transaction_fixture.csv',
+      :customers => 'fixture/customer_fixture.csv'
     }
     @engine = SalesEngine.new(@paths)
   end
