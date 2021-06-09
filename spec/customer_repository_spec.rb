@@ -54,7 +54,7 @@ RSpec.describe CustomerRepository do
                                     }
       @customer_repo.create(attributes)
       expect(@customer_repo.all.length).to eq(11)
-      expect(@customer_repo.all.last.id).to eq(13)
+      expect(@customer_repo.all.last.id).to eq(11)
       expect(@customer_repo.all.last.first_name).to eq("Natalie")
     end
   end
