@@ -186,4 +186,22 @@ class SalesAnalyst
       invoice_total(id)
     end
   end
+
+  # def top_revenue_earners(num = 20)
+  #   @sales_engine.all_invoices.map do |invoice|
+  #
+  #   # @sales_engine.all_merchants.sort_by
+  # end
+
+  def merchants_with_pending_invoices
+    not_paid = @sales_engine.all_invoices.find_all do |invoice|
+      invoice_paid_in_full?(invoice.id) != true
+    end
+    merch_ids = not_paid.map do |invoice|
+      invoice.merchant_id
+    end
+    merch_ids.map do |id|
+      @sales_engine.merchants.find_by_id(id)
+    end.uniq
+  end
 end

@@ -143,5 +143,16 @@ RSpec.describe 'SalesAnalyst' do
       date = Time.parse('2001-11-24')
       expect(@sales_analyst.total_revenue_by_date(date)).to eq(0.256022e4)
     end
+
+    xit 'can find desired number of top revenue earners' do
+      expect(@sales_analyst.top_revenue_earners(10)).to be_an(Array)
+      expect(@sales_analyst.top_revenue_earners.first.class).to be_a(Merchant)
+      expect(@sales_analyst.top_revenue_earners.first.id).to eq(12335747)
+    end
+
+    it 'can find all merchants with pending invoices' do
+      expect(@sales_analyst.merchants_with_pending_invoices).to be_an(Array)
+      expect(@sales_analyst.merchants_with_pending_invoices.first).to be_a(Merchant)
+    end
   end
 end
