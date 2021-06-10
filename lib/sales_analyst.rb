@@ -33,7 +33,6 @@ class SalesAnalyst
     end
     Math.sqrt(numerator/(data.length - 1)).round(2)
   end
-  #why the -1 ???
 
   def average_items_per_merchant_standard_deviation
     std_dev(self.number_items_per_merchant.values).round(2)
@@ -203,5 +202,29 @@ class SalesAnalyst
     merch_ids.map do |id|
       @sales_engine.merchants.find_by_id(id)
     end.uniq
+  end
+
+  def merchants_with_only_one_item
+    merchants = []
+    number_items_per_merchant.each do |merchant, items|
+      if items == 1
+        merchants << merchant
+      end
+    end
+    merchants
+  end
+
+  def items_created_per_merchant(month)
+    hash = Hash.new { |hash, key| hash[key] = Array.new }
+    @sales_engine.all_items.each do |item|
+      if item.created_at.strftime('%B') == month
+        hash[item.merchant_id] = item
+      end
+    end
+    hash
+  end
+  
+  def merchants_with_only_one_item_registered_in_month(month)
+    items_created_per_merchant(month)
   end
 end
