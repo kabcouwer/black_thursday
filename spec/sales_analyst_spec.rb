@@ -7,7 +7,8 @@ RSpec.describe 'SalesAnalyst' do
                                           :merchants => "./data/merchants.csv",
                                           :invoices => "./data/invoices.csv",
                                           :invoice_items => "./data/invoice_items.csv",
-                                          :transactions => "./data/transactions.csv"
+                                          :transactions => "./data/transactions.csv",
+                                          :customers => "./data/customers.csv"
                                         })
 
     @sales_analyst = @sales_engine.analyst
@@ -28,6 +29,8 @@ RSpec.describe 'SalesAnalyst' do
       expect(@sales_engine.all_invoice_items).to be_an(Array)
       expect(@sales_engine.transactions).to be_an(TransactionRepository)
       expect(@sales_engine.all_transactions).to be_an(Array)
+      expect(@sales_engine.customers).to be_a(CustomerRepository)
+      expect(@sales_engine.all_customers).to be_an(Array)
     end
   end
 
@@ -133,7 +136,40 @@ RSpec.describe 'SalesAnalyst' do
 
     it 'can return the total $ amount of the invoice with corresponding id' do
       invoice_id = 3560
-      expect(@sales_analyst.invoice_total(invoice_id)).to eq(0)
+      expect(@sales_analyst.invoice_total(invoice_id)).to eq(0.3116147e5)
+    end
+
+    it 'can find the total revenue for a given date' do
+      date = Time.parse('2001-11-24')
+      expect(@sales_analyst.total_revenue_by_date(date)).to eq(0.256022e4)
+    end
+
+    it 'can find desired number of top revenue earners' do
+      expect(@sales_analyst.top_revenue_earners(10)).to be_an(Array)
+      expect(@sales_analyst.top_revenue_earners.first.class).to be_a(Merchant)
+      expect(@sales_analyst.top_revenue_earners.first.id).to eq(12335747)
+    end
+
+    it 'can find all merchants with pending invoices' do
+      expect(@sales_analyst.merchants_with_pending_invoices).to be_an(Array)
+      expect(@sales_analyst.merchants_with_pending_invoices.first).to be_a(Merchant)
+    end
+
+    it 'can return a list of merchants with only one item' do
+      expect(@sales_analyst.merchants_with_only_one_item.length).to eq(243)
+      expect(@sales_analyst.merchants_with_only_one_item).to be_an(Array)
+      expect(@sales_analyst.merchants_with_only_one_item.first).to be_a(Merchant)
+    end
+
+    it 'can return a list of merchants with only one item registered in a given month' do
+      expect(@sales_analyst.merchants_with_only_one_item_registered_in_month).to be_an(Array)
+      expect(@sales_analyst.merchants_with_only_one_item_registered_in_month.first).to be_a(Merchant)
+    end
+
+    it 'can create a hash with items per merchant' do
+      month = 'March'
+      expect(@sales_analyst.items_created_per_merchant(month)).to be_a(Hash)
+      expect(@sales_analyst.items_created_per_merchant(month).length).to eq(21)
     end
   end
 end

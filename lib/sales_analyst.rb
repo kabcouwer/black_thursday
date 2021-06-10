@@ -33,7 +33,6 @@ class SalesAnalyst
     end
     Math.sqrt(numerator/(data.length - 1)).round(2)
   end
-  #why the -1 ???
 
   def average_items_per_merchant_standard_deviation
     std_dev(self.number_items_per_merchant.values).round(2)
@@ -161,7 +160,7 @@ class SalesAnalyst
 
   def invoice_paid_in_full?(invoice_id)
     @sales_engine.transactions.find_all_by_invoice_id(invoice_id).any? do |transaction|
-      transaction.result == 'success'
+      transaction.result == :success
     end
   end
 
@@ -173,5 +172,59 @@ class SalesAnalyst
      end
    end
    array.sum
+  end
+
+  def total_revenue_by_date(date)
+    invoices = @sales_engine.all_invoices.find_all do |invoice|
+      invoice.created_at.strftime('%Y-%m-%d') == date.strftime('%Y-%m-%d')
+    end
+    invoice_ids = invoices.map do |invoice|
+      invoice.id
+    end
+    invoice_ids.sum do |id|
+      invoice_total(id)
+    end
+  end
+
+  # def top_revenue_earners(num = 20)
+  #   @sales_engine.all_invoices.map do |invoice|
+  #
+  #   # @sales_engine.all_merchants.sort_by
+  # end
+
+  def merchants_with_pending_invoices
+    not_paid = @sales_engine.all_invoices.find_all do |invoice|
+      invoice_paid_in_full?(invoice.id) != true
+    end
+    merch_ids = not_paid.map do |invoice|
+      invoice.merchant_id
+    end
+    merch_ids.map do |id|
+      @sales_engine.merchants.find_by_id(id)
+    end.uniq
+  end
+
+  def merchants_with_only_one_item
+    merchants = []
+    number_items_per_merchant.each do |merchant, items|
+      if items == 1
+        merchants << merchant
+      end
+    end
+    merchants
+  end
+
+  def items_created_per_merchant(month)
+    hash = Hash.new { |hash, key| hash[key] = Array.new }
+    @sales_engine.all_items.each do |item|
+      if item.created_at.strftime('%B') == month
+        hash[item.merchant_id] = item
+      end
+    end
+    hash
+  end
+  
+  def merchants_with_only_one_item_registered_in_month(month)
+    items_created_per_merchant(month)
   end
 end
